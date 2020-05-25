@@ -21,9 +21,9 @@ class Login extends Component {
 
   constructor(props) {
     super(props);
-    const currentUser = localStorage.getItem('currentUser');
+    const currentUser = loginService.currentUser;
     console.log("Token "+currentUser);
-    if (currentUser && currentUser!=undefined) { 
+    if (currentUser && currentUser!='undefined') { 
       this.props.history.push('/');
     }
     this.state={

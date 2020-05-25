@@ -23,19 +23,16 @@ class BookingList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: loginService.currentUser,
+      currentUser: localStorage.getItem('currentUser'),
       bookings: [],
-  };
+    };
     const currentUser = this.state.currentUser;
-    console.log("token " + currentUser);
-    if (!currentUser ||  currentUser==undefined) { 
+    if (!currentUser ||  currentUser=='undefined') { 
       this.props.history.push('/login');
+    }else{
+      this._getAll(currentUser);
     }
     
-  }
-
-  componentDidMount() {
-    this._getAll();
   }
   
   render() {
@@ -74,8 +71,7 @@ class BookingList extends Component {
     </TableContainer>);
   }
 
-  _getAll = async () => {
-    const currentUser = localStorage.getItem('currentUser');
+  _getAll = async (currentUser) => {
     await bookingService.getAll(currentUser).then(data => {
       console.log(data);
       this.setState({ bookings:data })
